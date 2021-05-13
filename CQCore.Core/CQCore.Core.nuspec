@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>Rauland Australia</authors>
+    <owners>Rauland Australia</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Provides abstration for commands and queries.</description>
+    <releaseNotes>Provides abstration for commands and queries.</releaseNotes>
+    <copyright>Copyright 2020</copyright>
+    <tags>Abstraction Command Query Core</tags>
+  </metadata>
+</package>

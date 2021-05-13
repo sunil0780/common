@@ -1,0 +1,419 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="iaso_v001Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="30" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="30" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="AuthenticationIdentity" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Board">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="BoardTypeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="UpdateDateTime" Type="datetimeoffset" Precision="7" />
+          <Property Name="CreatedBy_Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UpdatedBy_Id" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="BoardParticipations">
+          <Key>
+            <PropertyRef Name="BoardId" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="BoardId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BoardType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="UpdateDateTime" Type="datetimeoffset" Precision="7" />
+          <Property Name="CreatedBy_Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UpdatedBy_Id" Type="uniqueidentifier" />
+        </EntityType>
+        <Association Name="FK_dbo_Board_dbo_AspNetUsers_CreatedBy_Id">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Board" Type="Self.Board" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Board">
+              <PropertyRef Name="CreatedBy_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Board_dbo_AspNetUsers_UpdatedBy_Id">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="Board" Type="Self.Board" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Board">
+              <PropertyRef Name="UpdatedBy_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Board_dbo_BoardType_BoardTypeId">
+          <End Role="BoardType" Type="Self.BoardType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Board" Type="Self.Board" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BoardType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Board">
+              <PropertyRef Name="BoardTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_BoardParticipations_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="BoardParticipations" Type="Self.BoardParticipations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BoardParticipations">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_BoardParticipations_dbo_Board_BoardId">
+          <End Role="Board" Type="Self.Board" Multiplicity="1" />
+          <End Role="BoardParticipations" Type="Self.BoardParticipations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Board">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BoardParticipations">
+              <PropertyRef Name="BoardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_BoardType_dbo_AspNetUsers_CreatedBy_Id">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="BoardType" Type="Self.BoardType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BoardType">
+              <PropertyRef Name="CreatedBy_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_BoardType_dbo_AspNetUsers_UpdatedBy_Id">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="BoardType" Type="Self.BoardType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BoardType">
+              <PropertyRef Name="UpdatedBy_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="iaso_v001ModelStoreContainer">
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Board" EntityType="Self.Board" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BoardParticipations" EntityType="Self.BoardParticipations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BoardType" EntityType="Self.BoardType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Board_dbo_AspNetUsers_CreatedBy_Id" Association="Self.FK_dbo_Board_dbo_AspNetUsers_CreatedBy_Id">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Board" EntitySet="Board" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Board_dbo_AspNetUsers_UpdatedBy_Id" Association="Self.FK_dbo_Board_dbo_AspNetUsers_UpdatedBy_Id">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Board" EntitySet="Board" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Board_dbo_BoardType_BoardTypeId" Association="Self.FK_dbo_Board_dbo_BoardType_BoardTypeId">
+            <End Role="BoardType" EntitySet="BoardType" />
+            <End Role="Board" EntitySet="Board" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_BoardParticipations_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_BoardParticipations_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="BoardParticipations" EntitySet="BoardParticipations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_BoardParticipations_dbo_Board_BoardId" Association="Self.FK_dbo_BoardParticipations_dbo_Board_BoardId">
+            <End Role="Board" EntitySet="Board" />
+            <End Role="BoardParticipations" EntitySet="BoardParticipations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_BoardType_dbo_AspNetUsers_CreatedBy_Id" Association="Self.FK_dbo_BoardType_dbo_AspNetUsers_CreatedBy_Id">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="BoardType" EntitySet="BoardType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_BoardType_dbo_AspNetUsers_UpdatedBy_Id" Association="Self.FK_dbo_BoardType_dbo_AspNetUsers_UpdatedBy_Id">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="BoardType" EntitySet="BoardType" />
+          </AssociationSet>
+          </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="iaso_v001Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Board">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BoardTypeId" Type="Guid" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="UpdateDateTime" Type="DateTimeOffset" Precision="7" />
+          <Property Name="CreatedBy_Id" Type="Guid" Nullable="false" />
+          <Property Name="UpdatedBy_Id" Type="Guid" />
+          <NavigationProperty Name="BoardType" Relationship="Self.FK_dbo_Board_dbo_BoardType_BoardTypeId" FromRole="Board" ToRole="BoardType" />
+          <NavigationProperty Name="CreatedBy" Relationship="iaso_v001Model.FK_dbo_Board_dbo_AspNetUsers_CreatedBy_Id" FromRole="Board" ToRole="AspNetUser" />
+          <NavigationProperty Name="UpdatedBy" Relationship="iaso_v001Model.FK_dbo_Board_dbo_AspNetUsers_UpdatedBy_Id" FromRole="Board" ToRole="AspNetUser" />
+          <NavigationProperty Name="Participants" Relationship="iaso_v001Model.BoardParticipations" FromRole="Board" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="BoardType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="UpdateDateTime" Type="DateTimeOffset" Precision="7" />
+          <Property Name="CreatedBy_Id" Type="Guid" Nullable="false" />
+          <Property Name="UpdatedBy_Id" Type="Guid" />
+          <NavigationProperty Name="Boards" Relationship="Self.FK_dbo_Board_dbo_BoardType_BoardTypeId" FromRole="BoardType" ToRole="Board" />
+          <NavigationProperty Name="CreatedBy" Relationship="iaso_v001Model.FK_dbo_BoardType_dbo_AspNetUsers_CreatedBy_Id" FromRole="BoardType" ToRole="AspNetUser" />
+          <NavigationProperty Name="UpdatedBy" Relationship="iaso_v001Model.FK_dbo_BoardType_dbo_AspNetUsers_UpdatedBy_Id" FromRole="BoardType" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FK_dbo_Board_dbo_BoardType_BoardTypeId">
+          <End Role="BoardType" Type="Self.BoardType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Board" Type="Self.Board" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BoardType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Board">
+              <PropertyRef Name="BoardTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="iaso_v001Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Boards" EntityType="Self.Board" />
+          <EntitySet Name="BoardTypes" EntityType="Self.BoardType" />
+          <AssociationSet Name="FK_dbo_Board_dbo_BoardType_BoardTypeId" Association="Self.FK_dbo_Board_dbo_BoardType_BoardTypeId">
+            <End Role="BoardType" EntitySet="BoardTypes" />
+            <End Role="Board" EntitySet="Boards" />
+          </AssociationSet>
+          <EntitySet Name="AspNetUsers" EntityType="iaso_v001Model.AspNetUser" />
+          <AssociationSet Name="FK_dbo_Board_dbo_AspNetUsers_CreatedBy_Id" Association="iaso_v001Model.FK_dbo_Board_dbo_AspNetUsers_CreatedBy_Id">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Board" EntitySet="Boards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Board_dbo_AspNetUsers_UpdatedBy_Id" Association="iaso_v001Model.FK_dbo_Board_dbo_AspNetUsers_UpdatedBy_Id">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Board" EntitySet="Boards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_BoardType_dbo_AspNetUsers_CreatedBy_Id" Association="iaso_v001Model.FK_dbo_BoardType_dbo_AspNetUsers_CreatedBy_Id">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="BoardType" EntitySet="BoardTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_BoardType_dbo_AspNetUsers_UpdatedBy_Id" Association="iaso_v001Model.FK_dbo_BoardType_dbo_AspNetUsers_UpdatedBy_Id">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="BoardType" EntitySet="BoardTypes" />
+          </AssociationSet>
+          <AssociationSet Name="BoardParticipations1" Association="iaso_v001Model.BoardParticipations">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Board" EntitySet="Boards" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="AuthenticationIdentity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Boards" Relationship="iaso_v001Model.FK_dbo_Board_dbo_AspNetUsers_CreatedBy_Id" FromRole="AspNetUser" ToRole="Board" />
+          <NavigationProperty Name="Boards1" Relationship="iaso_v001Model.FK_dbo_Board_dbo_AspNetUsers_UpdatedBy_Id" FromRole="AspNetUser" ToRole="Board" />
+          <NavigationProperty Name="BoardTypes" Relationship="iaso_v001Model.FK_dbo_BoardType_dbo_AspNetUsers_CreatedBy_Id" FromRole="AspNetUser" ToRole="BoardType" />
+          <NavigationProperty Name="BoardTypes1" Relationship="iaso_v001Model.FK_dbo_BoardType_dbo_AspNetUsers_UpdatedBy_Id" FromRole="AspNetUser" ToRole="BoardType" />
+          <NavigationProperty Name="Boards2" Relationship="iaso_v001Model.BoardParticipations" FromRole="AspNetUser" ToRole="Board" />
+        </EntityType>
+        <Association Name="FK_dbo_Board_dbo_AspNetUsers_CreatedBy_Id">
+          <End Type="iaso_v001Model.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="iaso_v001Model.Board" Role="Board" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Board">
+              <PropertyRef Name="CreatedBy_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Board_dbo_AspNetUsers_UpdatedBy_Id">
+          <End Type="iaso_v001Model.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="iaso_v001Model.Board" Role="Board" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Board">
+              <PropertyRef Name="UpdatedBy_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_BoardType_dbo_AspNetUsers_CreatedBy_Id">
+          <End Type="iaso_v001Model.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="iaso_v001Model.BoardType" Role="BoardType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BoardType">
+              <PropertyRef Name="CreatedBy_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_BoardType_dbo_AspNetUsers_UpdatedBy_Id">
+          <End Type="iaso_v001Model.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="iaso_v001Model.BoardType" Role="BoardType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BoardType">
+              <PropertyRef Name="UpdatedBy_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BoardParticipations">
+          <End Type="iaso_v001Model.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+          <End Type="iaso_v001Model.Board" Role="Board" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="iaso_v001ModelStoreContainer" CdmEntityContainer="iaso_v001Entities">
+          <EntitySetMapping Name="Boards">
+            <EntityTypeMapping TypeName="iaso_v001Model.Board">
+              <MappingFragment StoreEntitySet="Board">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BoardTypeId" ColumnName="BoardTypeId" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="UpdateDateTime" ColumnName="UpdateDateTime" />
+                <ScalarProperty Name="CreatedBy_Id" ColumnName="CreatedBy_Id" />
+                <ScalarProperty Name="UpdatedBy_Id" ColumnName="UpdatedBy_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BoardTypes">
+            <EntityTypeMapping TypeName="iaso_v001Model.BoardType">
+              <MappingFragment StoreEntitySet="BoardType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="UpdateDateTime" ColumnName="UpdateDateTime" />
+                <ScalarProperty Name="CreatedBy_Id" ColumnName="CreatedBy_Id" />
+                <ScalarProperty Name="UpdatedBy_Id" ColumnName="UpdatedBy_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="iaso_v001Model.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="AuthenticationIdentity" ColumnName="AuthenticationIdentity" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="BoardParticipations1" TypeName="iaso_v001Model.BoardParticipations" StoreEntitySet="BoardParticipations">
+            <EndProperty Name="Board">
+              <ScalarProperty Name="Id" ColumnName="BoardId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

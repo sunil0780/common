@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>Rauland Australia</authors>
+    <owners>Rauland Australia</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Provides core for generic repositories.</description>
+    <releaseNotes>Core generic repository</releaseNotes>
+    <copyright>Copyright 2020</copyright>
+    <tags>Command Query Repository Core</tags>
+  </metadata>
+</package>

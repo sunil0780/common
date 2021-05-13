@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <AssemblyName>Product.CQCore.Base</AssemblyName>
+    <RootNamespace>Product.CQCore.Base</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+     <Company>Product</Company>
+     <Authors>Product</Authors>
+     <PackageId>Product.CQCore.Base</PackageId>
+     <Version>1.1.0</Version>
+     <AssemblyVersion>1.1.0.0</AssemblyVersion>
+     <FileVersion>1.1.0.0</FileVersion>
+     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CQCore.Core\CQCore.Core.csproj" />
+    <ProjectReference Include="..\RepositoryCore.Core\RepositoryCore.Core.csproj" />
+  </ItemGroup>
+
+</Project>

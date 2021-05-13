@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+	<AssemblyName>Product.DependencyInjectionCore</AssemblyName>
+    <RootNamespace>Product.DependencyInjectionCore</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+     <Company>Product</Company>
+     <Authors>Product</Authors>
+     <PackageId>Product.DependencyInjectionCore</PackageId>
+     <Version>1.0.0</Version>
+     <AssemblyVersion>1.0.0.0</AssemblyVersion>
+     <FileVersion>1.0.0.0</FileVersion>
+     
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.4" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="Autofac.Owin" Version="4.2.0" />
+    <PackageReference Include="Autofac.WebApi2.Owin" Version="4.0.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
+  </ItemGroup>
+
+</Project>
